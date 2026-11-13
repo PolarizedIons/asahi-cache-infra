@@ -20,7 +20,7 @@
 
   services.hydra-builder = {
     enable = true;
-    queueRunnerAddr = "${config.services.hydra.queueRunner.grpc.address}:${config.services.hydra.queueRunner.grpc.port}";
+    queueRunnerAddr = "${config.services.hydra.queueRunner.grpc.address}:${toString config.services.hydra.queueRunner.grpc.port}";
   };
 
   # nix.buildMachines = [
