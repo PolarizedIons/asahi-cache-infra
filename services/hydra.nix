@@ -13,31 +13,17 @@
       using_frontend_proxy = 1
     '';
 
-    # buildMachinesFiles = [
-    #   "/etc/nix/machines"
-    # ];
+    queueRunner.grpc.unixSocket = "/run/hydra-queue-runner-grpc.sock";
   };
 
   services.hydra-builder = {
     enable = true;
-    queueRunnerAddr = "${config.services.hydra.queueRunner.grpc.address}:${toString config.services.hydra.queueRunner.grpc.port}";
+    queueRunnerAddr = "unix://${config.services.hydra.queueRunner.grpc.unixSocket}";
+    settings = {
+      maxJobs = 8;
+      supportedFeatures = [ "kvm" ];
+    };
   };
-
-  # nix.buildMachines = [
-  #   {
-  #     hostName = "localhost";
-  #     protocol = null;
-  #     system = "aarch64-linux";
-  #     systems = [
-  #       "aarch64-linux"
-  #     ];
-  #     maxJobs = 8;
-  #     speedFactor = 1;
-  #     supportedFeatures = [ "kvm" ];
-  #     mandatoryFeatures = [ ];
-  #   }
-  # ];
-  # nix.distributedBuilds = true;
 
   nix.settings = {
     max-jobs = 8;
