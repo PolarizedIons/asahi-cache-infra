@@ -21,6 +21,9 @@
     queueRunnerAddr = "unix://${config.services.hydra.queueRunner.grpc.unixSocket}";
     settings = {
       maxJobs = 8;
+      systems = [
+        "aarch64-linux"
+      ];
       supportedFeatures = [ "kvm" ];
     };
   };
