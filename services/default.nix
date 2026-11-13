@@ -3,7 +3,7 @@
 {
   imports = [
     ./attic.nix
-    # ./hydra.nix
+    ./hydra.nix
     ./nginx.nix
   ];
 }
