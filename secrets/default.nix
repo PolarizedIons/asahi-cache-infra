@@ -8,7 +8,7 @@ in
     map (s: {
       name = s;
       value = {
-        file = ./${s}.nix;
+        file = ./${s}.age;
       };
     }) secrets
   );
