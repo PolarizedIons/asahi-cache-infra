@@ -1,7 +1,15 @@
 { ... }:
 
+let
+  secrets = import ./secret-defs.nix;
+in
 {
-  age.secrets = {
-
-  };
+  age.secrets = builtins.listToAttrs (
+    map (s: {
+      name = s;
+      value = {
+        file = ./${s}.nix;
+      };
+    }) secrets
+  );
 }
