@@ -27,26 +27,22 @@
       map $scheme $hsts_header {
           https   "max-age=31536000; includeSubdomains; preload";
       }
-      more_set_headers  -a  "Strict-Transport-Security: $hsts_header";
+      add_header Strict-Transport-Security $hsts_header;
 
       # Enable CSP for your services.
-      more_set_headers  -a  'Content-Security-Policy: "script-src 'self'; object-src 'none'; base-uri 'none';" always';
+      add_header Content-Security-Policy "script-src 'self'; object-src 'none'; base-uri 'none';" always;
 
       # Minimize information leaked to other domains
-      more_set_headers  -a  "Referrer-Policy: origin-when-cross-origin";
+      add_header 'Referrer-Policy' 'origin-when-cross-origin';
 
       # Disable embedding as a frame
-      more_set_headers  -a  "X-Frame-Options: DENY";
+      add_header X-Frame-Options DENY;
 
       # Prevent injection of code in other mime types (XSS Attacks)
-      more_set_headers  -a  "X-Content-Type-Options: nosniff";
+      add_header X-Content-Type-Options nosniff;
 
       # This might create errors
       # proxy_cookie_path / "/; secure; HttpOnly; SameSite=strict";
-
-      proxy_headers_hash_max_size 1024;
-      proxy_headers_hash_bucket_size 128;
-      server_names_hash_bucket_size 128;
     '';
 
     commonHttpConfig =
