@@ -13,6 +13,22 @@
     '';
   };
 
+  nix.buildMachines = [
+    {
+      hostName = "localhost";
+      protocol = null;
+      system = "aarch64-linux";
+      systems = [
+        "aarch64-linux"
+      ];
+      maxJobs = 8;
+      speedFactor = 1;
+      supportedFeatures = [ "kvm" ];
+      mandatoryFeatures = [ ];
+    }
+  ];
+  nix.distributedBuilds = true;
+
   nix.settings = {
     max-jobs = 8;
     experimental-features = [
