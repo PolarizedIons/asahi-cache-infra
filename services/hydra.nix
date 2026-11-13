@@ -10,7 +10,12 @@
     useSubstitutes = true;
     extraConfig = ''
       max_concurrent_evals = 1
+      using_frontend_proxy = 1
     '';
+
+    buildMachinesFiles = [
+      "/etc/nix/machines"
+    ];
   };
 
   nix.buildMachines = [
