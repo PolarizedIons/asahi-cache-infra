@@ -35,7 +35,7 @@
     serviceConfig = {
       DynamicUser = true;
       StateDirectory = "attic-watch-store";
-      LoadCredential = "attic-token:${config.age.secrets.hydra-token-attic.path}";
+      LoadCredential = "attic-token:${config.age.secrets.hydra-attic-token.path}";
       MemoryHigh = "5%";
       MemoryMax = "10%";
       Restart = "always";
