@@ -13,26 +13,28 @@
       using_frontend_proxy = 1
     '';
 
-    buildMachinesFiles = [
-      "/etc/nix/machines"
-    ];
+    # buildMachinesFiles = [
+    #   "/etc/nix/machines"
+    # ];
   };
 
-  nix.buildMachines = [
-    {
-      hostName = "localhost";
-      protocol = null;
-      system = "aarch64-linux";
-      systems = [
-        "aarch64-linux"
-      ];
-      maxJobs = 8;
-      speedFactor = 1;
-      supportedFeatures = [ "kvm" ];
-      mandatoryFeatures = [ ];
-    }
-  ];
-  nix.distributedBuilds = true;
+  services.hydra-builder.enable = true;
+
+  # nix.buildMachines = [
+  #   {
+  #     hostName = "localhost";
+  #     protocol = null;
+  #     system = "aarch64-linux";
+  #     systems = [
+  #       "aarch64-linux"
+  #     ];
+  #     maxJobs = 8;
+  #     speedFactor = 1;
+  #     supportedFeatures = [ "kvm" ];
+  #     mandatoryFeatures = [ ];
+  #   }
+  # ];
+  # nix.distributedBuilds = true;
 
   nix.settings = {
     max-jobs = 8;
