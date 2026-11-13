@@ -13,4 +13,16 @@ in
     openssh.authorizedKeys.keys = value.sshKeys;
     packages = value.pkgs pkgs;
   }) maintainers;
+
+  security.sudo.extraRules = [
+    {
+      groups = [ "wheel" ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 }
