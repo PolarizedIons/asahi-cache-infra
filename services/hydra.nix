@@ -18,7 +18,10 @@
     # ];
   };
 
-  services.hydra-builder.enable = true;
+  services.hydra-builder = {
+    enable = true;
+    queueRunnerAddr = "${config.services.hydra.queueRunner.grpc.address}:${config.services.hydra.queueRunner.grpc.port}";
+  };
 
   # nix.buildMachines = [
   #   {
