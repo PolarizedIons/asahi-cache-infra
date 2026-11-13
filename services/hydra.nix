@@ -24,7 +24,12 @@
       systems = [
         "aarch64-linux"
       ];
-      supportedFeatures = [ "kvm" ];
+      supportedFeatures = [
+        "kvm"
+        "big-parallel"
+        "nixos-test"
+        "benchmark"
+      ];
     };
   };
 
