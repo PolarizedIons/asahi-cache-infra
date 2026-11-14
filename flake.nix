@@ -39,6 +39,7 @@
             sha256 = "sha256-eM8x++mD3AbWYqR4X4xXIXNtcIP4lGKcilOL/lLbF+M=";
           };
           vendorHash = "sha256-vU6aB0FKGgGj0sbEzmhOPIztNwnxTaLBbi8O50N28rU=";
+          meta.mainProgram = pname;
         };
 
       nixosConfigurations.phobos = nixpkgs.lib.nixosSystem {

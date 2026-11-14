@@ -38,7 +38,7 @@ in
       ExecStart = lib.concatStringsSep " " [
         "${lib.getExe self.packages.${system}.oidc-ssh-ca} serve"
         "--config ${policy}"
-        "--listen 8010"
+        "--listen :8010"
         "--skip-key-permission-check"
       ];
       ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
