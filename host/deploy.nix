@@ -14,6 +14,7 @@ in
 {
   users.users.deploy = {
     isNormalUser = true;
+    extraGroups = [ "wheel" ];
   };
 
   environment.etc."ssh/auth_principals/deploy" = {

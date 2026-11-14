@@ -16,6 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: DeterminateSystems/nix-installer-action@main
+
       - name: Generate ephemeral SSH key
         run: ssh-keygen -t ed25519 -N "" -f gha_key
 
@@ -36,10 +38,14 @@ jobs:
                 --data @- -o gha_key-cert.pub
 
       - name: Deploy
+        env:
+          NIX_SSHOPTS: "-o CertificateFile=gha_key-cert.pub -o IdentitiesOnly=yes -o UserKnownHostsFile=./.ssh/known_hosts -o StrictHostKeyChecking=yes"
         run: |
-          ssh -i gha_key \
-            -o CertificateFile=gha_key-cert.pub \
-            -o IdentitiesOnly=yes \
-            -o UserKnownHostsFile=./.ssh/known_hosts \
-            -o StrictHostKeyChecking=yes \
-            deploy@phobos.polarizedions.net 'hostname && whoami'
+          nixos-rebuild switch --flake .#phobos --build-host deploy@phobos.polarizedions.net --target-host deploy@phobos.polarizedions.net --use-remote-sudo
+
+          # ssh -i gha_key \
+          #   -o CertificateFile=gha_key-cert.pub \
+          #   -o IdentitiesOnly=yes \
+          #   -o UserKnownHostsFile=./.ssh/known_hosts \
+          #   -o StrictHostKeyChecking=yes \
+          #   deploy@phobos.polarizedions.net 'hostname && whoami'
