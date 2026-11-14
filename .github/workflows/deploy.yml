@@ -2,6 +2,9 @@ name: Deploy with SSH certificate
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 permissions:
   id-token: write
