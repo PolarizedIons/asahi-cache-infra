@@ -10,24 +10,24 @@
 let
   policy = ./deploy-policy.yaml;
   pubKey = pkgs.writeText "ca.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3n4rmvQDbuOTOGhbx9AhM4k1n9VztkYikElr+YUn7/";
-  principal = pkgs.writeTextFile {
-    name = "principal";
-    text = ''
-      gha-prod-deploy
-    '';
-    destination = "/etc/ssh/auth_principals/deploy";
-  };
 in
 {
   users.users.deploy = {
     isNormalUser = true;
   };
 
+  environment.etc."ssh/auth_principals/deploy" = {
+    text = ''
+      gha-prod-deploy
+    '';
+    mode = "0644";
+  };
+
   services.openssh.extraConfig = ''
     TrustedUserCAKeys ${pubKey}
 
     Match User deploy
-        AuthorizedPrincipalsFile ${principal}/etc/ssh/auth_principals/%u
+        AuthorizedPrincipalsFile /etc/ssh/auth_principals/%u
   '';
 
   systemd.services.oidc-ssh-ca = {
