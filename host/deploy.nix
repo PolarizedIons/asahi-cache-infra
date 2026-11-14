@@ -10,9 +10,17 @@
 let
   policy = ./deploy-policy.yaml;
   pubKey = pkgs.writeText "ca.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3n4rmvQDbuOTOGhbx9AhM4k1n9VztkYikElr+YUn7/";
-  principal = pkgs.writeText "principal" ''
-    gha-prod-deploy
-  '';
+  principal = pkgs.writeTextFile {
+    name = "principal";
+    text = ''
+      gha-prod-deploy
+    '';
+    destination = "/etc/ssh/auth_principals/deploy";
+  };
+
+  # "principal" ''
+  #   gha-prod-deploy
+  # '';
 in
 {
   users.users.deploy = {
