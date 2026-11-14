@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     steps:
       - uses: actions/checkout@v4
 
@@ -45,7 +45,7 @@ jobs:
             --flake .#phobos \
             --build-host deploy@phobos.polarizedions.net \
             --target-host deploy@phobos.polarizedions.net \
-            --use-remote-sudo
+            --elevate=sudo
 
           # ssh -i gha_key \
           #   -o CertificateFile=gha_key-cert.pub \
