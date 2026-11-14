@@ -17,7 +17,7 @@ rules:
         claims_exact:
           repository: "PolarizedIons/asahi-cache-infra"
           ref: "refs/heads/main"
-          event_name: "push"
+          # event_name: "push"
           job_workflow_ref: "PolarizedIons/asahi-cache-infra/.github/workflows/deploy.yml@refs/heads/main"
     certificate:
       principals:
