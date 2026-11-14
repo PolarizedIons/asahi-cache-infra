@@ -39,9 +39,13 @@ jobs:
 
       - name: Deploy
         env:
-          NIX_SSHOPTS: "-o CertificateFile=gha_key-cert.pub -o IdentitiesOnly=yes -o UserKnownHostsFile=./.ssh/known_hosts -o StrictHostKeyChecking=yes"
+          NIX_SSHOPTS: "-i gha_key -o CertificateFile=gha_key-cert.pub -o IdentitiesOnly=yes -o UserKnownHostsFile=./.ssh/known_hosts -o StrictHostKeyChecking=yes"
         run: |
-          nixos-rebuild switch --flake .#phobos --build-host deploy@phobos.polarizedions.net --target-host deploy@phobos.polarizedions.net --use-remote-sudo
+          nix run nixpkgs#nixos-rebuild -- switch \
+            --flake .#phobos \
+            --build-host deploy@phobos.polarizedions.net \
+            --target-host deploy@phobos.polarizedions.net \
+            --use-remote-sudo
 
           # ssh -i gha_key \
           #   -o CertificateFile=gha_key-cert.pub \
