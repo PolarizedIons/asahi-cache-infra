@@ -7,6 +7,9 @@
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    attic.url = "github:zhaofengli/attic";
+    attic.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -14,6 +17,7 @@
       self,
       nixpkgs,
       agenix,
+      attic,
       ...
     }@inputs:
     let
@@ -41,6 +45,7 @@
         inherit system;
         modules = [
           agenix.nixosModules.default
+          attic.nixosModules.atticd
           ./host
           ./secrets
           ./services
