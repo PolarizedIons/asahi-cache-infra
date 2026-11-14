@@ -10,10 +10,35 @@
   };
 
   outputs =
-    { nixpkgs, agenix, ... }@inputs:
     {
+      self,
+      nixpkgs,
+      agenix,
+      ...
+    }@inputs:
+    let
+      system = "aarch64-linux";
+    in
+    {
+
+      packages."${system}".oidc-ssh-ca =
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        pkgs.buildGoModule rec {
+          pname = "oidc-ssh-ca";
+          version = "0.4.0";
+          src = pkgs.fetchFromGitHub {
+            owner = "atsuoishimoto";
+            repo = "oidc-ssh-ca";
+            rev = "${version}";
+            sha256 = "sha256-eM8x++mD3AbWYqR4X4xXIXNtcIP4lGKcilOL/lLbF+M=";
+          };
+          vendorHash = "sha256-vU6aB0FKGgGj0sbEzmhOPIztNwnxTaLBbi8O50N28rU=";
+        };
+
       nixosConfigurations.phobos = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
+        inherit system;
         modules = [
           agenix.nixosModules.default
           ./host
@@ -21,7 +46,7 @@
           ./services
         ];
         specialArgs = {
-          inherit inputs;
+          inherit inputs self system;
         };
       };
     };
