@@ -9,8 +9,8 @@
 
 let
   policy = ./deploy-policy.yaml;
-  pubKey = pkgs.writeTextFile "ca.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3n4rmvQDbuOTOGhbx9AhM4k1n9VztkYikElr+YUn7/";
-  principal = pkgs.writeTextFile "principal" ''
+  pubKey = pkgs.writeText "ca.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3n4rmvQDbuOTOGhbx9AhM4k1n9VztkYikElr+YUn7/";
+  principal = pkgs.writeText "principal" ''
     gha-prod-deploy
   '';
 in
