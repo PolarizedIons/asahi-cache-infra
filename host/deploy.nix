@@ -17,10 +17,6 @@ let
     '';
     destination = "/etc/ssh/auth_principals/deploy";
   };
-
-  # "principal" ''
-  #   gha-prod-deploy
-  # '';
 in
 {
   users.users.deploy = {
@@ -31,7 +27,7 @@ in
     TrustedUserCAKeys ${pubKey}
 
     Match User deploy
-        AuthorizedPrincipalsFile ${principal}
+        AuthorizedPrincipalsFile ${principal}/etc/ssh/auth_principals/%u
   '';
 
   systemd.services.oidc-ssh-ca = {
