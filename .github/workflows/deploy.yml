@@ -13,8 +13,9 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
+      - uses: actions/checkout@v4
+
       - name: Generate ephemeral SSH key
         run: ssh-keygen -t ed25519 -N "" -f gha_key
 
@@ -39,5 +40,6 @@ jobs:
           ssh -i gha_key \
             -o CertificateFile=gha_key-cert.pub \
             -o IdentitiesOnly=yes \
+            -o UserKnownHostsFile=./.ssh/known_hosts \
             -o StrictHostKeyChecking=yes \
             deploy@phobos.polarizedions.net 'hostname && whoami'
